@@ -1,5 +1,8 @@
 <script setup>
     import { ref } from "vue";
+    import TransferenciasService from "@/services/TransferenciasService";
+    import { defineEmits } from 'vue';
+
 
     defineProps({
         toggle: Boolean
@@ -7,28 +10,38 @@
 
     const contaOrigem = ref("");
     const contaDestino = ref("");
-    const valorTransferencia = ref("");
+    const valorTransferencia = ref(0);
     const dataTransferencia = ref("");
 
     const formatarValor = () => {
-        let valor = parseFloat(valorTransferencia.value.replace(",", "."));
+        let valor = parseFloat(valorTransferencia.value);
         if (!isNaN(valor)) {
-            valorTransferencia.value = valor.toFixed(2).replace(".", ",");
+            valorTransferencia.value = valor.toFixed(2);
         } else {
             valorTransferencia.value = "";
         }
     };
 
+    const emit = defineEmits();
+    const showAlert = (mensagem) => {
+    emit('show-alert', mensagem);
+    };
+
     const gravar = () => {
-        console.log("Conta Origem:", contaOrigem.value);
-        console.log("Conta Destino:", contaDestino.value);
-        console.log("Valor Transferência:", valorTransferencia.value);
-        console.log("Data Transferência:", dataTransferencia.value);
+        TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
+            .then((response) => {
+                
+                showAlert();
+                contaOrigem.value = "";
+                contaDestino.value = "";
+                valorTransferencia.value = 0;
+                dataTransferencia.value = "";
+            })
     };
 </script>
 <template>
     <div class=" "  v-if="toggle == true">
-        <form @submit.prevent="gravar" class="w-full flex gap-3 items-center h-[30vh]">
+        <form @submit.prevent="gravar" class="w-full flex gap-3 items-center ">
         <div class="form ">
             <label for="contaOrigem">Conta Origem</label>
             <input type="text" v-model="contaOrigem" id="contaOrigem" placeholder="Conta Origem" maxlength="10"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-emerald-500 dark:focus:border-emerald-500"  required>
