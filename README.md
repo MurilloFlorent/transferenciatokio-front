@@ -1,29 +1,51 @@
-# transferenciatokio-front
+# Transferencia Tokio - Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Este é o repositório do frontend do projeto **Transferencia Tokio**, uma aplicação web desenvolvida com Vue.js e Tailwind CSS.
 
-## Recommended IDE Setup
+## Tecnologias Utilizadas
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Vue.js**: Framework progressivo para construção de interfaces de usuário.
+- **Vite**: Ferramenta de build e desenvolvimento rápido.
+- **Tailwind CSS**: Framework de estilização baseado em utilitários.
+- **Axios**: Cliente HTTP para interação com APIs.
 
-## Customize configuration
+## Instalação
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. Clone este repositório:
+   ```sh
+   git clone https://github.com/MurilloFlorent/transferenciatokio-front
+   ```
+2. Acesse o diretório do projeto:
+   ```sh
+   cd transferenciatokio-front
+   ```
+3. Instale as dependências:
+   ```sh
+   npm install
+   ```
 
-## Project Setup
+## Execução do Projeto
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
+Para rodar o projeto localmente, utilize:
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+O servidor será iniciado e você poderá acessar a aplicação no navegador.
 
-```sh
-npm run build
-```
+## Tailwind
+
+Escolhi usar o Tailwind para facilitar a estilização do projeto.
+
+## Axios
+
+Utilizei o Axios na comunicação com o back-end do projeto. Em `src/services/` é encontrado o arquivo com as chamadas para os endpoints no backend.
+
+## Componentes
+
+Separei o projeto em quatro componentes:
+- **Card**: Componente pai.
+- **Form** e **List**: Componentes que aparecem conforme solicitado no componente pai.
+- **Alert**: Utilizado para comunicação com o backend.
+
