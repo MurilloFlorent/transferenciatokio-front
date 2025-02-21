@@ -27,24 +27,37 @@
     emit('show-alert', mensagem, type);
     };
 
-        const gravar = () => {
+    const gravar = async () => {
+        try {
             if(contaOrigem.value.length == 10 && contaDestino.value.length == 10){
-                TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
-                    .then((response) => {
-                        
-                        showAlert("Transferência feita com Sucesso!","sucesso");
-                        contaOrigem.value = "";
-                        contaDestino.value = "";
-                        valorTransferencia.value = 0;
-                        dataTransferencia.value = "";
-                    }).catch(error => {
-                        showAlert(error.response.data.message, "error");
-                    });
+                
+             const response = await TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
+        
+                if(response.status == 200) {
+                    showAlert("Transferência feita com Sucesso!","sucesso");
+                    
+                    contaOrigem.value = "";
+                    contaDestino.value = "";
+                    valorTransferencia.value = 0;
+                    dataTransferencia.value = "";
+                }
             }else {
-                showAlert(" Contas inválidas", "error");
-            }
-       
-        };
+                throw new Error("Contas inválidas");
+            }          
+
+        } catch(error) {
+            
+            if (error.response && error.response.data || error.message) {
+                error.message == 'Contas inválidas' ? showAlert(error.message,"error") : showAlert(error.response.data.errorMessage,"error");
+
+            } else {
+                showAlert('Erro desconhecido, tente novamente.',"error");
+            
+            }            
+        }
+            
+            
+    };
 </script>
 <template>
     <div class=" "  v-if="toggle == true">
