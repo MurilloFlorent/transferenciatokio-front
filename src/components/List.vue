@@ -31,7 +31,7 @@
     });
 </script>
 <template>
-    <div class="w-full " v-if="toggle == true">
+    <div class="w-full max-h-[70vh] overflow-auto" v-if="toggle == true">
         <ul role="list" class="divide-y divide-emerald-100 pt-6">
             <li class="flex justify-start items-start gap-x-6 p-5" v-for="transferencia in transferencias">
                 <div class="flex flex-col min-w-0 gap-x-4" >

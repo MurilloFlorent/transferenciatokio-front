@@ -27,28 +27,24 @@
     emit('show-alert', mensagem, type);
     };
 
-    const gravar = async () => {
-        try {
-            const response = await TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
-        
-                showAlert("Transferência feita com Sucesso!","sucesso");
-                contaOrigem.value = "";
-                contaDestino.value = "";
-                valorTransferencia.value = 0;
-                dataTransferencia.value = "";
-
-        } catch(error) {
-            if (error.response && error.response.data) {
-
-                showAlert(error.response.data.errorMessage,"error");
-            } else {
-                showAlert('Erro desconhecido, tente novamente.',"error");
-            
-            }            
-        }
-            
-            
-    };
+        const gravar = () => {
+            if(contaOrigem.value.length == 10 && contaDestino.value.length == 10){
+                TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
+                    .then((response) => {
+                        
+                        showAlert("Transferência feita com Sucesso!","sucesso");
+                        contaOrigem.value = "";
+                        contaDestino.value = "";
+                        valorTransferencia.value = 0;
+                        dataTransferencia.value = "";
+                    }).catch(error => {
+                        showAlert(error.response.data.message, "error");
+                    });
+            }else {
+                showAlert(" Contas inválidas", "error");
+            }
+       
+        };
 </script>
 <template>
     <div class=" "  v-if="toggle == true">
