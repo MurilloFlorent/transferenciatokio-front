@@ -31,27 +31,17 @@
     });
 </script>
 <template>
-    <div class="" v-if="toggle == true">
-        <table  class="w-full rounded-3xl text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-emerald-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th  scope="col" class="px-6 py-3">Conta Origem</th>
-                    <th  scope="col" class="px-6 py-3">Conta Destino</th>
-                    <th  scope="col" class="px-6 py-3">Valor</th>
-                    <th  scope="col" class="px-6 py-3">Data Transferência</th>
-                    <th  scope="col" class="px-6 py-3">Data Solicitação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="transferencia in transferencias" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                    <td>{{ transferencia.contaOrigem }}</td>
-                    <td>{{ transferencia.contaDestino }}</td>
-                    <td>{{ transferencia.valorTransferencia }}</td>
-                    <td>{{ transferencia.dataTransferencia }}</td>
-                    <td>{{ transferencia.dataAgendamento }}</td>
-                </tr>
-            </tbody>
-            
-        </table>
+    <div class="w-full " v-if="toggle == true">
+        <ul role="list" class="divide-y divide-emerald-100 pt-6">
+            <li class="flex justify-start items-start gap-x-6 p-5" v-for="transferencia in transferencias">
+                <div class="flex flex-col min-w-0 gap-x-4" >
+                    <span><strong>Conta Origem: </strong>{{ transferencia.contaOrigem  }}</span>
+                    <span><strong>Conta Destino: </strong>{{ transferencia.contaDestino  }}</span>
+                    <span><strong>Valor: </strong>{{ transferencia.valorTransferencia  }}</span>
+                    <span><strong>Data Transferência: </strong>{{ transferencia.dataTransferencia  }}</span>
+                    <span><strong>Data Solicitação: </strong>{{ transferencia.dataAgendamento  }}</span>
+                </div>
+            </li> 
+        </ul>
     </div>
 </template>
