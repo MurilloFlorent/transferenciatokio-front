@@ -28,9 +28,7 @@
     };
 
     const gravar = async () => {
-        try {
-            if(contaOrigem.value.length == 10 && contaDestino.value.length == 10){
-                
+        try {   
              const response = await TransferenciasService.postTransferencia(contaOrigem.value,contaDestino.value,valorTransferencia.value,dataTransferencia.value)
         
                 if(response.status == 200) {
@@ -40,15 +38,11 @@
                     contaDestino.value = "";
                     valorTransferencia.value = 0;
                     dataTransferencia.value = "";
-                }
-            }else {
-                throw new Error("Contas inválidas");
-            }          
-
+                }         
         } catch(error) {
-            
-            if (error.response && error.response.data || error.message) {
-                error.message == 'Contas inválidas' ? showAlert(error.message,"error") : showAlert(error.response.data.errorMessage,"error");
+            if (error.response && error.response.data) {
+
+                showAlert(error.response.data.errorMessage,"error");
 
             } else {
                 showAlert('Erro desconhecido, tente novamente.',"error");

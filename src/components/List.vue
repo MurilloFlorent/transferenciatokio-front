@@ -10,15 +10,27 @@
 
     const toggleRef = toRef(props, "toggle");
 
+    const emit = defineEmits();
+    const showAlert = (mensagem,type) => {
+    emit('show-alert', mensagem, type);
+    };
+
     const getTransferencias = async () => {
     try {
         const response = await TransferenciasService.getTransferencias();
         transferencias.value = response.data;
-        console.log(transferencias.value);
+        
     } catch (error) {
-        console.error("Erro ao buscar transferências:", error);
+        showAlert(error.response.data.errorMessage,"error");
     }
     };
+
+    const formatarValor = (valor) => {
+      const val = Number(valor.replace(",", "."));
+      if (!val) return '0,00';
+      const valorString = val.toFixed(2).replace(".", ",");
+      return valorString
+    }
 
     onMounted(() => {
     getTransferencias();
@@ -37,7 +49,7 @@
                 <div class="flex flex-col min-w-0 gap-x-4" >
                     <span><strong>Conta Origem: </strong>{{ transferencia.contaOrigem  }}</span>
                     <span><strong>Conta Destino: </strong>{{ transferencia.contaDestino  }}</span>
-                    <span><strong>Valor: </strong>{{ transferencia.valorTransferencia  }}</span>
+                    <span><strong>Valor: </strong>{{ formatarValor(transferencia.valorTransferencia)  }}</span>
                     <span><strong>Data Transferência: </strong>{{ transferencia.dataTransferencia  }}</span>
                     <span><strong>Data Solicitação: </strong>{{ transferencia.dataAgendamento  }}</span>
                 </div>
